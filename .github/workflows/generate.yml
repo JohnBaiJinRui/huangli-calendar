@@ -50,7 +50,7 @@ jobs:
               yi = ".".join(lunar.getDayYi()) or "无"
               ji = ".".join(lunar.getDayJi()) or "无"
               
-              # 神位：确保输出明确的方位
+              # 神位：显示汉字方位
               xi = lunar.getDayPositionXiDesc() or lunar.getDayPositionXi()
               fu = lunar.getDayPositionFuDesc() or lunar.getDayPositionFu()
               cai = lunar.getDayPositionCaiDesc() or lunar.getDayPositionCai()
@@ -62,9 +62,9 @@ jobs:
               sha = lunar.getDaySha()
               chong_sha = f"冲{chong}岁(生肖{chong_shengxiao}), 煞{sha}"
 
-              # 详细胎神
+              # 修正：获取详细胎神位置描述
               try:
-                  taishen = lunar.getDayPositionTaiSui()
+                  taishen = lunar.getDayPositionTaiShen()
               except:
                   taishen = "暂无"
 
@@ -98,5 +98,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add huangli.ics
-          git commit -m "Update huangli format with clear directions and detailed chongsha" || exit 0
+          git commit -m "Fix tai shen detailed description" || exit 0
           git push
