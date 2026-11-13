@@ -31,6 +31,34 @@ jobs:
           start_year = 2026
           end_year = 2029
 
+          # 胎神白话文翻译辅助函数
+          def translate_taishen(raw_text):
+              if not raw_text or raw_text == "无":
+                  return "无特定方位"
+              
+              # 常见关键词替换与白话文润色
+              s = raw_text
+              s = s.replace("占", "位置在：")
+              s = s.replace("房", "房间")
+              s = s.replace("床", "床铺")
+              s = s.replace("门", "大门/房门")
+              s = s.replace("碓", "石磨旁")
+              s = s.replace("磨", "磨盘旁")
+              s = s.replace("灶", "灶台")
+              s = s.replace("厕", "厕所")
+              s = s.replace("仓", "仓库")
+              s = s.replace("厨", "厨房")
+              s = s.replace("仓库", "仓库")
+              s = s.replace("外", "室外/外面")
+              s = s.replace("内", "室内")
+              s = s.replace("东", "正东方")
+              s = s.replace("南", "正南方")
+              s = s.replace("西", "正西方")
+              s = s.replace("北", "正北方")
+              s = s.replace("中", "中央/中间")
+              
+              return f"{raw_text} （白话：{s}）"
+
           lines = [
               "BEGIN:VCALENDAR",
               "VERSION:2.0",
@@ -62,11 +90,9 @@ jobs:
               sha = lunar.getDaySha()
               chong_sha = f"冲{chong}岁(生肖{chong_shengxiao}), 煞{sha}"
 
-              # 修正：获取详细胎神位置描述
-              try:
-                  taishen = lunar.getDayPositionTaiShen()
-              except:
-                  taishen = "暂无"
+              # 获取胎神并翻译为白话文
+              raw_taishen = lunar.getDayTaishen()
+              taishen = translate_taishen(raw_taishen)
 
               date_str = cur.strftime("%Y年%m月%d日")
               d_str = cur.strftime("%Y%m%d")
@@ -98,5 +124,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add huangli.ics
-          git commit -m "Fix tai shen detailed description" || exit 0
+          git commit -m "Add baihuawen translation for taishen" || exit 0
           git push
