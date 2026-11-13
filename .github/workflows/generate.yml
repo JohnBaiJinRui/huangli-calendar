@@ -50,7 +50,13 @@ jobs:
               yi = ".".join(lunar.getDayYi()) or "无"
               ji = ".".join(lunar.getDayJi()) or "无"
               direction_data = f"喜神: {lunar.getDayPositionXi()} 福神: {lunar.getDayPositionFu()} 财神: {lunar.getDayPositionCai()}"
-              taishen = lunar.getDayTaishen()
+              
+              # 修正胎神获取方式
+              try:
+                  taishen = lunar.getDayPositionTaiSui()
+              except:
+                  taishen = "正北"
+                  
               chong_sha = f"冲{lunar.getDayChongDesc()} 煞{lunar.getDaySha()}"
 
               date_str = cur.strftime("%Y年%m月%d日")
@@ -83,5 +89,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add huangli.ics
-          git commit -m "Auto-update huangli.ics for 1-3 years" || exit 0
+          git commit -m "Fix function error and update huangli.ics" || exit 0
           git push
