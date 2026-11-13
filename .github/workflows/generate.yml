@@ -62,21 +62,24 @@ jobs:
               sha = lunar.getDaySha()
               chong_sha = f"冲{chong}岁(生肖{chong_shengxiao}), 煞{sha}"
 
-              # 修正：使用正确的 getTaiShen() 方法获取胎神
+              # 强制通过底层属性或多样化方法获取胎神，避免返回空
               taishen_raw = ""
               try:
-                  taishen_raw = lunar.getTaiShen()
+                  taishen_raw = lunar.getDayTaiShen()
               except:
-                  taishen_raw = "无"
+                  try:
+                      taishen_raw = lunar.getTaiShen()
+                  except:
+                      pass
               
               if not taishen_raw:
-                  taishen_raw = "无"
-              
+                  taishen_raw = "库中无记录"
+
               # 白话文翻译
               ts_desc = taishen_raw
               ts_desc = ts_desc.replace("房", "房间").replace("床", "床铺").replace("门", "大门").replace("碓", "石磨").replace("磨", "磨盘").replace("灶", "灶台").replace("仓", "仓库").replace("东", "正东").replace("南", "正南").replace("西", "正西").replace("北", "正北").replace("中", "中央")
               
-              taishen = f"{taishen_raw} （白话：位置在{ts_desc}）" if taishen_raw != "无" else "无特定方位"
+              taishen = f"{taishen_raw} （白话：位置在{ts_desc}）"
 
               date_str = cur.strftime("%Y年%m月%d日")
               d_str = cur.strftime("%Y%m%d")
@@ -108,5 +111,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add huangli.ics
-          git commit -m "Fix getTaiShen method correctly" || exit 0
+          git commit -m "Fix getDayTaiShen fallback" || exit 0
           git push
