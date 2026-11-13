@@ -49,15 +49,24 @@ jobs:
               
               yi = ".".join(lunar.getDayYi()) or "无"
               ji = ".".join(lunar.getDayJi()) or "无"
-              direction_data = f"喜神: {lunar.getDayPositionXi()} 福神: {lunar.getDayPositionFu()} 财神: {lunar.getDayPositionCai()}"
               
-              # 修正胎神获取方式
+              # 神位：确保输出明确的方位
+              xi = lunar.getDayPositionXiDesc() or lunar.getDayPositionXi()
+              fu = lunar.getDayPositionFuDesc() or lunar.getDayPositionFu()
+              cai = lunar.getDayPositionCaiDesc() or lunar.getDayPositionCai()
+              direction_data = f"喜神: {xi} | 福神: {fu} | 财神: {cai}"
+              
+              # 详细冲煞
+              chong = lunar.getDayChong()
+              chong_shengxiao = lunar.getDayChongShengXiao()
+              sha = lunar.getDaySha()
+              chong_sha = f"冲{chong}岁(生肖{chong_shengxiao}), 煞{sha}"
+
+              # 详细胎神
               try:
                   taishen = lunar.getDayPositionTaiSui()
               except:
-                  taishen = "正北"
-                  
-              chong_sha = f"冲{lunar.getDayChongDesc()} 煞{lunar.getDaySha()}"
+                  taishen = "暂无"
 
               date_str = cur.strftime("%Y年%m月%d日")
               d_str = cur.strftime("%Y%m%d")
@@ -89,5 +98,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add huangli.ics
-          git commit -m "Fix function error and update huangli.ics" || exit 0
+          git commit -m "Update huangli format with clear directions and detailed chongsha" || exit 0
           git push
