@@ -3,7 +3,7 @@ name: Generate HuangLi ICS
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 1 * *'
+    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -28,8 +28,33 @@ jobs:
           from datetime import date, timedelta
           from lunar_python import Solar
 
-          start_year = 2026
-          end_year = 2029
+          # 动态获取今天，并计算往后 3 个月（约 92 天）的范围
+          start_date = date.today()
+          end_date = start_date + timedelta(days=92)
+
+          # 八卦与现代白话翻译映射
+          def translate_bagua(raw):
+              if not raw:
+                  return "无特定方位"
+              
+              mapping = {
+                  "坎": "正北方",
+                  "离": "正南方",
+                  "震": "正东方",
+                  "兑": "正西方",
+                  "乾": "西北方",
+                  "坤": "西南方",
+                  "巽": "东南方",
+                  "艮": "东北方",
+                  "中": "中央/中间"
+              }
+              
+              translated = raw
+              for k, v in mapping.items():
+                  translated = translated.replace(k, v)
+              
+              translated = translated.replace("房", "房间").replace("床", "床铺").replace("门", "大门").replace("碓", "石磨").replace("磨", "磨盘").replace("灶", "灶台").replace("仓", "仓库").replace("厨", "厨房")
+              return f"{raw} （白话：{translated}）"
 
           lines = [
               "BEGIN:VCALENDAR",
@@ -40,10 +65,8 @@ jobs:
               "X-WR-TIMEZONE:Asia/Shanghai"
           ]
 
-          cur = date(start_year, 1, 1)
-          end = date(end_year, 12, 31)
-
-          while cur <= end:
+          cur = start_date
+          while cur <= end_date:
               solar = Solar.fromYmd(cur.year, cur.month, cur.day)
               lunar = solar.getLunar()
               
@@ -62,21 +85,17 @@ jobs:
               sha = lunar.getDaySha()
               chong_sha = f"冲{chong}岁(生肖{chong_shengxiao}), 煞{sha}"
 
-              # 核心修正：使用正确的方法获取胎神方位
+              # 获取胎神并白话翻译
               taishen_raw = ""
               try:
                   taishen_raw = lunar.getDayPositionTaiSui()
               except:
-                  taishen_raw = ""
-
-              if not taishen_raw:
-                  taishen_raw = "正北"
-
-              # 白话文翻译
-              ts_desc = taishen_raw
-              ts_desc = ts_desc.replace("房", "房间").replace("床", "床铺").replace("门", "大门").replace("碓", "石磨").replace("磨", "磨盘").replace("灶", "灶台").replace("仓", "仓库").replace("东", "正东").replace("南", "正南").replace("西", "正西").replace("北", "正北").replace("中", "中央")
+                  taishen_raw = "离"
               
-              taishen = f"{taishen_raw} （白话：位置在{ts_desc}）"
+              if not taishen_raw:
+                  taishen_raw = "离"
+
+              taishen = translate_bagua(taishen_raw)
 
               date_str = cur.strftime("%Y年%m月%d日")
               d_str = cur.strftime("%Y%m%d")
@@ -100,7 +119,7 @@ jobs:
           lines.append("END:VCALENDAR")
           with open("huangli.ics", "w", encoding="utf-8") as f:
               f.write("\n".join(lines))
-          print("黄历ics文件生成成功！")
+          print("动态3个月黄历ics文件生成成功！")
           '
 
       - name: Commit and push generated file
@@ -108,5 +127,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add huangli.ics
-          git commit -m "Use getDayPositionTaiSui for correct taishen" || exit 0
+          git commit -m "Auto update: rolling next 3 months daily" || exit 0
           git push
