@@ -31,34 +31,6 @@ jobs:
           start_year = 2026
           end_year = 2029
 
-          # 胎神白话文翻译辅助函数
-          def translate_taishen(raw_text):
-              if not raw_text or raw_text == "无":
-                  return "无特定方位"
-              
-              # 常见关键词替换与白话文润色
-              s = raw_text
-              s = s.replace("占", "位置在：")
-              s = s.replace("房", "房间")
-              s = s.replace("床", "床铺")
-              s = s.replace("门", "大门/房门")
-              s = s.replace("碓", "石磨旁")
-              s = s.replace("磨", "磨盘旁")
-              s = s.replace("灶", "灶台")
-              s = s.replace("厕", "厕所")
-              s = s.replace("仓", "仓库")
-              s = s.replace("厨", "厨房")
-              s = s.replace("仓库", "仓库")
-              s = s.replace("外", "室外/外面")
-              s = s.replace("内", "室内")
-              s = s.replace("东", "正东方")
-              s = s.replace("南", "正南方")
-              s = s.replace("西", "正西方")
-              s = s.replace("北", "正北方")
-              s = s.replace("中", "中央/中间")
-              
-              return f"{raw_text} （白话：{s}）"
-
           lines = [
               "BEGIN:VCALENDAR",
               "VERSION:2.0",
@@ -90,9 +62,23 @@ jobs:
               sha = lunar.getDaySha()
               chong_sha = f"冲{chong}岁(生肖{chong_shengxiao}), 煞{sha}"
 
-              # 获取胎神并翻译为白话文
-              raw_taishen = lunar.getDayTaishen()
-              taishen = translate_taishen(raw_taishen)
+              # 稳妥获取胎神及白话文
+              taishen_raw = ""
+              try:
+                  taishen_raw = lunar.getDayPositionTaiShen()
+              except:
+                  pass
+              if not taishen_raw:
+                  try:
+                      taishen_raw = lunar.getDayTaishen()
+                  except:
+                      taishen_raw = "暂无"
+              
+              # 简单直观的白话翻译
+              ts_desc = taishen_raw
+              ts_desc = ts_desc.replace("房", "房间").replace("床", "床铺").replace("门", "大门").replace("碓", "石磨").replace("磨", "磨盘").replace("灶", "灶台").replace("仓", "仓库").replace("东", "正东").replace("南", "正南").replace("西", "正西").replace("北", "正北").replace("中", "中央")
+              
+              taishen = f"{taishen_raw} （白话：位置在{ts_desc}）" if taishen_raw != "暂无" else "暂无特定方位"
 
               date_str = cur.strftime("%Y年%m月%d日")
               d_str = cur.strftime("%Y%m%d")
@@ -124,5 +110,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add huangli.ics
-          git commit -m "Add baihuawen translation for taishen" || exit 0
+          git commit -m "Fix robust taishen extraction" || exit 0
           git push
