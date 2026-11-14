@@ -5,15 +5,6 @@ CALSCALE:GREGORIAN
 X-WR-CALNAME:每日黄历
 X-WR-TIMEZONE:Asia/Shanghai
 BEGIN:VEVENT
-UID:huangli-20261113@local
-DTSTAMP:20261113T000000Z
-DTSTART;VALUE=DATE:20261113
-DTEND;VALUE=DATE:20261114
-SUMMARY:每日黄历
-DESCRIPTION:2026年11月13日\n\n【宜】\n嫁娶.祭祀.祈福.求嗣.开光.出火.出行.拆卸.开市.交易.立券.挂匾.伐木.入宅.移徙.安床.安葬\n\n【忌】\n栽种.掘井.置产\n\n【神位】\n喜神: 西南 | 福神: 西北 | 财神: 正东\n\n【冲煞】\n冲酉岁(生肖鸡), 煞西\n\n【胎神】\n中 （白话：中央/中间）
-TRANSP:TRANSPARENT
-END:VEVENT
-BEGIN:VEVENT
 UID:huangli-20261114@local
 DTSTAMP:20261114T000000Z
 DTSTART;VALUE=DATE:20261114
@@ -839,6 +830,15 @@ DTSTART;VALUE=DATE:20270213
 DTEND;VALUE=DATE:20270214
 SUMMARY:每日黄历
 DESCRIPTION:2027年02月13日\n\n【宜】\n祭祀.沐浴.理发.作灶.结网.栽种\n\n【忌】\n嫁娶.词讼.行丧.安葬.牧养.伐木.作梁.开市.纳畜.造畜稠\n\n【神位】\n喜神: 东南 | 福神: 东北 | 财神: 正南\n\n【冲煞】\n冲巳岁(生肖蛇), 煞西\n\n【胎神】\n坤 （白话：西南方）
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:huangli-20270214@local
+DTSTAMP:20270214T000000Z
+DTSTART;VALUE=DATE:20270214
+DTEND;VALUE=DATE:20270215
+SUMMARY:每日黄历
+DESCRIPTION:2027年02月14日\n\n【宜】\n嫁娶.祭祀.开光.祈福.求嗣.出行.开市.交易.立券.动土.纳财.掘井.会亲友\n\n【忌】\n入宅.安葬.伐木.作梁.纳畜.造畜稠.作灶\n\n【神位】\n喜神: 东北 | 福神: 正北 | 财神: 东北\n\n【冲煞】\n冲午岁(生肖马), 煞南\n\n【胎神】\n震 （白话：正东方）
 TRANSP:TRANSPARENT
 END:VEVENT
 END:VCALENDAR
