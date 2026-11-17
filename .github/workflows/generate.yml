@@ -1,9 +1,9 @@
 name: Generate HuangLi ICS
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # 允许你在 GitHub 网页上随时手动点一下立刻生成
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '30 22 * * *' # 改为每天 UTC 22:30（即北京时间早上 6:30 运行），避开每天 0 点的服务器拥堵高峰
 
 jobs:
   build:
@@ -28,31 +28,19 @@ jobs:
           from datetime import date, timedelta
           from lunar_python import Solar
 
-          # 动态获取今天，并计算往后 3 个月（约 92 天）的范围
           start_date = date.today()
           end_date = start_date + timedelta(days=92)
 
-          # 八卦与现代白话翻译映射
           def translate_bagua(raw):
               if not raw:
                   return "无特定方位"
-              
               mapping = {
-                  "坎": "正北方",
-                  "离": "正南方",
-                  "震": "正东方",
-                  "兑": "正西方",
-                  "乾": "西北方",
-                  "坤": "西南方",
-                  "巽": "东南方",
-                  "艮": "东北方",
-                  "中": "中央/中间"
+                  "坎": "正北方", "离": "正南方", "震": "正东方", "兑": "正西方",
+                  "乾": "西北方", "坤": "西南方", "巽": "东南方", "艮": "东北方", "中": "中央/中间"
               }
-              
               translated = raw
               for k, v in mapping.items():
                   translated = translated.replace(k, v)
-              
               translated = translated.replace("房", "房间").replace("床", "床铺").replace("门", "大门").replace("碓", "石磨").replace("磨", "磨盘").replace("灶", "灶台").replace("仓", "仓库").replace("厨", "厨房")
               return f"{raw} （白话：{translated}）"
 
@@ -73,27 +61,21 @@ jobs:
               yi = ".".join(lunar.getDayYi()) or "无"
               ji = ".".join(lunar.getDayJi()) or "无"
               
-              # 神位：显示汉字方位
               xi = lunar.getDayPositionXiDesc() or lunar.getDayPositionXi()
               fu = lunar.getDayPositionFuDesc() or lunar.getDayPositionFu()
               cai = lunar.getDayPositionCaiDesc() or lunar.getDayPositionCai()
               direction_data = f"喜神: {xi} | 福神: {fu} | 财神: {cai}"
               
-              # 详细冲煞
               chong = lunar.getDayChong()
               chong_shengxiao = lunar.getDayChongShengXiao()
               sha = lunar.getDaySha()
               chong_sha = f"冲{chong}岁(生肖{chong_shengxiao}), 煞{sha}"
 
-              # 获取胎神并白话翻译
-              taishen_raw = ""
+              taishen_raw = "离"
               try:
-                  taishen_raw = lunar.getDayPositionTaiSui()
+                  taishen_raw = lunar.getDayPositionTaiSui() or "离"
               except:
-                  taishen_raw = "离"
-              
-              if not taishen_raw:
-                  taishen_raw = "离"
+                  pass
 
               taishen = translate_bagua(taishen_raw)
 
