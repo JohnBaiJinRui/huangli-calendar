@@ -5,15 +5,6 @@ CALSCALE:GREGORIAN
 X-WR-CALNAME:每日黄历
 X-WR-TIMEZONE:Asia/Shanghai
 BEGIN:VEVENT
-UID:huangli-20261116@local
-DTSTAMP:20261116T000000Z
-DTSTART;VALUE=DATE:20261116
-DTEND;VALUE=DATE:20261117
-SUMMARY:每日黄历
-DESCRIPTION:2026年11月16日\n\n【宜】\n纳采.订盟.嫁娶.祭祀.祈福.雕刻.移徙.开市.入宅.出行.动土.会亲友.入学.修造.起基.安门.安床.造庙.解除.纳财.开池.造畜稠.牧养\n\n【忌】\n上梁.开仓.出货财.盖屋.造船\n\n【神位】\n喜神: 东北 | 福神: 正北 | 财神: 东北\n\n【冲煞】\n冲子岁(生肖鼠), 煞北\n\n【胎神】\n离 （白话：正南方）
-TRANSP:TRANSPARENT
-END:VEVENT
-BEGIN:VEVENT
 UID:huangli-20261117@local
 DTSTAMP:20261117T000000Z
 DTSTART;VALUE=DATE:20261117
@@ -839,6 +830,15 @@ DTSTART;VALUE=DATE:20270216
 DTEND;VALUE=DATE:20270217
 SUMMARY:每日黄历
 DESCRIPTION:2027年02月16日\n\n【宜】\n开光.解除.伐木.竖柱.上梁.交易.立券.纳畜.入殓.移柩.安葬\n\n【忌】\n入宅.出行.移徙.祭祀.嫁娶.动土.破土.作灶\n\n【神位】\n喜神: 西南 | 福神: 西北 | 财神: 西南\n\n【冲煞】\n冲申岁(生肖猴), 煞北\n\n【胎神】\n震 （白话：正东方）
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:huangli-20270217@local
+DTSTAMP:20270217T000000Z
+DTSTART;VALUE=DATE:20270217
+DTEND;VALUE=DATE:20270218
+SUMMARY:每日黄历
+DESCRIPTION:2027年02月17日\n\n【宜】\n祭祀.祈福.求嗣.开光.嫁娶.出行.解除.伐木.拆卸.进人口.安床.动土.起基.上梁.栽种.纳畜.破土.谢土.启钻.安葬\n\n【忌】\n移徙.入宅.出火.作灶.掘井\n\n【神位】\n喜神: 正南 | 福神: 东南 | 财神: 西南\n\n【冲煞】\n冲酉岁(生肖鸡), 煞西\n\n【胎神】\n震 （白话：正东方）
 TRANSP:TRANSPARENT
 END:VEVENT
 END:VCALENDAR
