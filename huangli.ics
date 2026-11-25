@@ -5,15 +5,6 @@ CALSCALE:GREGORIAN
 X-WR-CALNAME:每日黄历
 X-WR-TIMEZONE:Asia/Shanghai
 BEGIN:VEVENT
-UID:huangli-20261124@local
-DTSTAMP:20261124T000000Z
-DTSTART;VALUE=DATE:20261124
-DTEND;VALUE=DATE:20261125
-SUMMARY:每日黄历
-DESCRIPTION:2026年11月24日\n\n【宜】\n出行.纳财.开市.交易.立券.动土.移徙.入宅.裁衣.会亲友.拆卸.进人口.安香.经络.出货财.修饰垣墙.平治道涂\n\n【忌】\n造庙.谢土.作灶.作梁.伐木.安葬.行丧.修坟.探病\n\n【神位】\n喜神: 正南 | 福神: 东南 | 财神: 正南\n\n【冲煞】\n冲申岁(生肖猴), 煞北\n\n【胎神】\n兑 （白话：正西方）
-TRANSP:TRANSPARENT
-END:VEVENT
-BEGIN:VEVENT
 UID:huangli-20261125@local
 DTSTAMP:20261125T000000Z
 DTSTART;VALUE=DATE:20261125
@@ -839,6 +830,15 @@ DTSTART;VALUE=DATE:20270224
 DTEND;VALUE=DATE:20270225
 SUMMARY:每日黄历
 DESCRIPTION:2027年02月24日\n\n【宜】\n塞穴.结网.取渔.畋猎\n\n【忌】\n嫁娶.安门.移徙.入宅.安葬\n\n【神位】\n喜神: 东北 | 福神: 正北 | 财神: 东北\n\n【冲煞】\n冲辰岁(生肖龙), 煞北\n\n【胎神】\n坤 （白话：西南方）
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:huangli-20270225@local
+DTSTAMP:20270225T000000Z
+DTSTART;VALUE=DATE:20270225
+DTEND;VALUE=DATE:20270226
+SUMMARY:每日黄历
+DESCRIPTION:2027年02月25日\n\n【宜】\n纳采.祭祀.祈福.出行.会亲友.修造.动土.移徙.入宅\n\n【忌】\n嫁娶.开市.安葬.破土\n\n【神位】\n喜神: 西北 | 福神: 西南 | 财神: 东北\n\n【冲煞】\n冲巳岁(生肖蛇), 煞西\n\n【胎神】\n坤 （白话：西南方）
 TRANSP:TRANSPARENT
 END:VEVENT
 END:VCALENDAR
